@@ -10,7 +10,7 @@ os.chdir(r"C:\Users\shaolqi\Desktop")
 wb = openpyxl.load_workbook('example.xlsx')
 
 sheet = wb.get_sheet_by_name('Sheet1')
-
+#---------------------------------------------------------------------------------
 # choose the range of table you want
 r_want = int(input('enter row number you want:'))       
 c_want = int(input('enter column number you want:'))   
