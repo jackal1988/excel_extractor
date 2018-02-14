@@ -37,19 +37,32 @@ recArea = sheet[startCell:endCell]  # recArea type is tuple
 dictData = {}
 lsEachDictKey = []
 
-lsEachDictValue = []
+lsEachDictValueAll = []
 
 for rowNum in range(0,len(recArea)):                     #iterate all row in recArea
     if rowNum == 0: #如果是第一行，则存为key
         for eachCell in recArea[rowNum]:
-            lsEachDictKey.append(eachCell.value)
+            # if eachCell.value != None:
+                lsEachDictKey.append(eachCell.value)
+            # else:
+            #     continue
         tupEachDictKey = tuple(lsEachDictKey)
     else:
         for eachCell in recArea[rowNum]:
-            lsEachDictValue.append(eachCell.value)
-    dictData.setdefault(tupEachDictKey,lsEachDictValue)
+            lsEachDictValueAll.append(eachCell.value)
 
-pprint.pprint(dictData)
+    # dictData.setdefault(tupEachDictKey,lsEachDictValue)
+
+
+lsEachDictValueAllRegroup = []
+
+for c in range(0,len(lsEachDictKey)):        #regroup lsEachDictValue...but will there be any error in using variable c?
+    while c < len(lsEachDictValueAll):
+        lsEachDictValueAllRegroup.append(lsEachDictValueAll[c])
+        c = c + len(lsEachDictKey)
+    c = c + 1
+
+pprint.pprint(lsEachDictValueAllRegroup)
 
 
 # wbTemp.save('newEnergyCarList')
