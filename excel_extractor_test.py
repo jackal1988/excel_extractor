@@ -9,13 +9,13 @@ from openpyxl import Workbook
 
 # from openpyxl.cell.cell import column_index_from_string
 
-os.chdir(r"C:\Users\shaolqi\Desktop")
+os.chdir(r"C:\Users\Administrator\Desktop")
 print('Opening workbook...')
 wb = openpyxl.load_workbook('免征车辆购置税的新能源汽车车型目录（第十五批）.xlsx')
-sheet = wb.get_sheet_by_name('Table 2')
+sheet = wb.get_sheet_by_name('Table 1')
 # ------------create a new workbook to store the selected data
-wbTemp = Workbook()
-sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
+# wbTemp = Workbook()
+# sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
 # print(type(sheet))
 # ------------------------#customize the rectangle area you want-----------------------
 # startRow    = int(input("enter the start row number you want:"))
@@ -24,8 +24,8 @@ sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
 # endColumn   = input("enter the end column letter you want:")
 # startCell = startColumn + str(startRow)
 # endCell   = endColumn + str(endRow)
-startCell = 'A2'
-endCell = 'J72'
+startCell = 'A5'
+endCell = 'L28'
 recArea = sheet[startCell:endCell]  # recArea type is tuple
 # listRecArea = list(recArea)
 # print(recArea[0][1].value)
@@ -49,12 +49,15 @@ for rowNum in range(0,len(recArea)):                     #iterate all row in rec
 # pprint.pprint(lsEachDictKey)
 #regroup lsEachDictValue-------------------------------------
 lsEachDictValueAllRegroup = []
-for c in range(0,len(lsEachDictKey)):    # Will there be any error in using variable c?
-    while c < len(lsEachDictValueAll):
-        lsEachDictValueAllRegroup.append(lsEachDictValueAll[c])
-        c += len(lsEachDictKey)
+for c in range(0,len(lsEachDictKey)):
+    n = c
+    while n < len(lsEachDictValueAll):
+        lsEachDictValueAllRegroup.append(lsEachDictValueAll[n])
+        n += len(lsEachDictKey)
     c += 1
-pprint.pprint(lsEachDictValueAllRegroup)
 
-
-# wbTemp.save('newEnergyCarList')
+#auto fill up none company name value cell --------------------------------------
+for m in range(len(recArea)-1,2*(len(recArea)-1)):
+    if lsEachDictValueAllRegroup[m] == None:
+        lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m-1]
+    pprint.pprint(lsEachDictValueAllRegroup[m])
