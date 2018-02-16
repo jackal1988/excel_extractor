@@ -12,7 +12,7 @@ from openpyxl import Workbook
 os.chdir(r"C:\Users\Administrator\Desktop")
 print('Opening workbook...')
 wb = openpyxl.load_workbook('免征车辆购置税的新能源汽车车型目录（第十五批）.xlsx')
-sheet = wb.get_sheet_by_name('Table 1')
+sheet = wb.get_sheet_by_name('Table 6')
 # ------------create a new workbook to store the selected data
 # wbTemp = Workbook()
 # sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
@@ -24,13 +24,13 @@ sheet = wb.get_sheet_by_name('Table 1')
 # endColumn   = input("enter the end column letter you want:")
 # startCell = startColumn + str(startRow)
 # endCell   = endColumn + str(endRow)
-startCell = 'A5'
-endCell = 'L28'
+startCell = 'a2'
+endCell = 'm8'
 recArea = sheet[startCell:endCell]  # recArea type is tuple
 # listRecArea = list(recArea)
 # print(recArea[0][1].value)
 # Loop through recArea --------------------------------------------------------------------------------------
-dictData = {}
+
 lsEachDictKey = []
 lsEachDictValueAll = []
 for rowNum in range(0,len(recArea)):                     #iterate all row in recArea
@@ -47,7 +47,7 @@ for rowNum in range(0,len(recArea)):                     #iterate all row in rec
 
     # dictData.setdefault(tupEachDictKey,lsEachDictValue)
 # pprint.pprint(lsEachDictKey)
-#regroup lsEachDictValue-------------------------------------
+# Regroup lsEachDictValue-------------------------------------
 lsEachDictValueAllRegroup = []
 for c in range(0,len(lsEachDictKey)):
     n = c
@@ -56,8 +56,15 @@ for c in range(0,len(lsEachDictKey)):
         n += len(lsEachDictKey)
     c += 1
 
-#auto fill up none company name value cell --------------------------------------
-for m in range(len(recArea)-1,2*(len(recArea)-1)):
+stepLen = len(recArea)-1
+# Auto fill up none company name value cell --------------------------------------
+for m in range(stepLen,2*stepLen):
     if lsEachDictValueAllRegroup[m] == None:
         lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m-1]
-    pprint.pprint(lsEachDictValueAllRegroup[m])
+    # pprint.pprint(lsEachDictValueAllRegroup[m])
+# Dictionary data structure
+dictData = {}
+for n in range(0,len(lsEachDictKey)):
+    dictData.setdefault(lsEachDictKey[n],lsEachDictValueAllRegroup[n*stepLen:(n+1)*stepLen])
+# pprint.pprint(dictData)
+# Clean up dictData-------------------------------------------------------------------
