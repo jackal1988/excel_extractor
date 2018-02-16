@@ -11,8 +11,8 @@ from openpyxl import Workbook
 
 os.chdir(r"C:\Users\Administrator\Desktop")
 print('Opening workbook...')
-wb = openpyxl.load_workbook('免征车辆购置税的新能源汽车车型目录（第十五批）.xlsx')
-sheet = wb.get_sheet_by_name('Table 6')
+wb = openpyxl.load_workbook('免征车辆购置税的新能源汽车车型目录_第14批_公布时间20171204.xlsx')
+sheet = wb.get_sheet_by_name('Table 3')
 # ------------create a new workbook to store the selected data
 # wbTemp = Workbook()
 # sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
@@ -25,7 +25,7 @@ sheet = wb.get_sheet_by_name('Table 6')
 # startCell = startColumn + str(startRow)
 # endCell   = endColumn + str(endRow)
 startCell = 'a2'
-endCell = 'm8'
+endCell = 'j3'
 recArea = sheet[startCell:endCell]  # recArea type is tuple
 # listRecArea = list(recArea)
 # print(recArea[0][1].value)
@@ -66,5 +66,6 @@ for m in range(stepLen,2*stepLen):
 dictData = {}
 for n in range(0,len(lsEachDictKey)):
     dictData.setdefault(lsEachDictKey[n],lsEachDictValueAllRegroup[n*stepLen:(n+1)*stepLen])
-# pprint.pprint(dictData)
+dictData.pop(None)  # pop out None key-value
+pprint.pprint(dictData)
 # Clean up dictData-------------------------------------------------------------------
