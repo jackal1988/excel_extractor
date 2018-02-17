@@ -33,11 +33,11 @@ recArea = sheet[startCell:endCell]  # recArea type is tuple
 
 lsEachDictKey = []
 lsEachDictValueAll = []
-for rowNum in range(0,len(recArea)):                     #iterate all row in recArea
-    if rowNum == 0: #如果是第一行，则存为key
+for rowNum in range(0,len(recArea)):                     # Iterate all row in recArea
+    if rowNum == 0: # save 1st line as key
         for eachCell in recArea[rowNum]:
                 lsEachDictKey.append(eachCell.value)
-        for m in range(0,len(lsEachDictKey)):  # 去掉key字符串里的换行符
+        for m in range(0,len(lsEachDictKey)):  # delete '\n' in lsEachDictKey
             if lsEachDictKey[m] != None:
                 lsEachDictKey[m] = lsEachDictKey[m].replace('\n','')
             else:
@@ -46,14 +46,14 @@ for rowNum in range(0,len(recArea)):                     #iterate all row in rec
     else:
         for eachCell in recArea[rowNum]:
             lsEachDictValueAll.append(eachCell.value)
-        for m in range(0,len(lsEachDictValueAll)):  # 去掉value字符串里的换行符,注意replace只能针对str型数据
-            if lsEachDictValueAll[m] != None and type(lsEachDictValueAll[m]) == str:
+        for m in range(0,len(lsEachDictValueAll)):  # delete '\n' in lsEachDictValueAll.
+            if lsEachDictValueAll[m] != None and type(lsEachDictValueAll[m]) == str: # 'replace()' method only effective towards str type data.
                 lsEachDictValueAll[m] = lsEachDictValueAll[m].replace('\n','')
             else:
                 continue
 
     # dictData.setdefault(tupEachDictKey,lsEachDictValue)
-pprint.pprint(lsEachDictKey)
+# pprint.pprint(lsEachDictKey)
 # Regroup lsEachDictValue-------------------------------------
 lsEachDictValueAllRegroup = []
 for c in range(0,len(lsEachDictKey)):
@@ -62,7 +62,7 @@ for c in range(0,len(lsEachDictKey)):
         lsEachDictValueAllRegroup.append(lsEachDictValueAll[n])
         n += len(lsEachDictKey)
     c += 1
-pprint.pprint(lsEachDictValueAllRegroup)
+# pprint.pprint(lsEachDictValueAllRegroup)
 stepLen = len(recArea)-1
 # Auto fill up none company name value cell --------------------------------------
 for m in range(stepLen,2*stepLen):   # This method may not be flawless.
