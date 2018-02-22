@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 
 # readCensusExcel.py - calculate population by SLQ
-# for each county
-import openpyxl, pprint, os
-from openpyxl import Workbook
+
+import openpyxl, pprint
+from tkinter.filedialog import askopenfilename
+# from openpyxl import Workbook
 
 
 # from openpyxl.cell.cell import column_index_from_string
 
-os.chdir(r"C:\Users\Administrator\Desktop")
+# os.chdir(r"C:\Users\Administrator\Desktop")
 print('Opening workbook...')
-wb = openpyxl.load_workbook('免征车辆购置税的新能源汽车车型目录（第十五批）.xlsx')
+fname = askopenfilename()
+wb = openpyxl.load_workbook(fname)
 sheet = wb.get_sheet_by_name('Table 4')
 # ------------create a new workbook to store the selected data
 # wbTemp = Workbook()
@@ -24,8 +26,8 @@ sheet = wb.get_sheet_by_name('Table 4')
 # endColumn   = input("enter the end column letter you want:")
 # startCell = startColumn + str(startRow)
 # endCell   = endColumn + str(endRow)
-startCell = 'a2'
-endCell = 'j55'
+startCell = 'A2'
+endCell = 'J55'
 recArea = sheet[startCell:endCell]  # recArea type is tuple
 # listRecArea = list(recArea)
 # print(recArea[0][1].value)
