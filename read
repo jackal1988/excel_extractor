@@ -3,7 +3,7 @@
 
 # readCensusExcel.py - calculate population by SLQ
 
-import openpyxl, pprint
+import openpyxl, pprint, sys
 from tkinter.filedialog import askopenfilename
 # from openpyxl import Workbook
 # os.chdir(r"C:\Users\Administrator\Desktop")
@@ -36,7 +36,10 @@ lsEachDictValueAll = []
 for rowNum in range(0,len(recArea)):                     # Iterate all row in recArea
     if rowNum == 0: # save 1st line as key of dictionary
         for eachCell in recArea[rowNum]:
-                lsEachDictKey.append(eachCell.value)
+            if type(eachCell.value) == int: # attribute column must be selected
+                print('属性列不在选择范围内，请重选。\n')
+                sys.exit()
+            lsEachDictKey.append(eachCell.value)
         for m in range(0,len(lsEachDictKey)):  # delete '\n' in lsEachDictKey
             if lsEachDictKey[m] != None:
                 lsEachDictKey[m] = lsEachDictKey[m].replace('\n','')
@@ -70,11 +73,12 @@ for m in range(stepLen,2*stepLen):   # This method may not be flawless.
         lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m-1]
 # pprint.pprint(lsEachDictValueAllRegroup)
 
-# Dictionary data structure-----------------------------------------------------------
+# Build dictionary data structure-----------------------------------------------------------
 dictData = {}
 for n in range(0,len(lsEachDictKey)):
     dictData.setdefault(lsEachDictKey[n],lsEachDictValueAllRegroup[n*stepLen:(n+1)*stepLen])
-for eachKey in dictData.keys():   # pop out None key value
+for eachKey in list(dictData.keys()):   # pop out 'None' key value
+    # 被遍历的对象，在被遍历时其数据结构不能更改！！！所以用list(dictData.keys())代替dictData()
     if eachKey == None:
         dictData.pop(eachKey)
 pprint.pprint(dictData)
