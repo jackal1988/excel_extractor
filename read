@@ -33,25 +33,26 @@ recArea = sheet[startCell:endCell]  # recArea type is tuple
 
 lsEachDictKey = []
 lsEachDictValueAll = []
-for rowNum in range(0,len(recArea)):                     # Iterate all row in recArea
-    if rowNum == 0: # save 1st line as key of dictionary
+for rowNum in range(0, len(recArea)):  # Iterate all row in recArea
+    if rowNum == 0:  # save 1st line as key of dictionary
         for eachCell in recArea[rowNum]:
-            if type(eachCell.value) == int: # attribute column must be selected
+            if type(eachCell.value) == int:  # attribute column must be selected
                 print('属性列不在选择范围内，请重选。\n')
                 sys.exit()
             lsEachDictKey.append(eachCell.value)
-        for m in range(0,len(lsEachDictKey)):  # delete '\n' in lsEachDictKey
-            if lsEachDictKey[m] != None:
-                lsEachDictKey[m] = lsEachDictKey[m].replace('\n','')
+        for m in range(0, len(lsEachDictKey)):  # delete '\n' in lsEachDictKey
+            if lsEachDictKey[m] is not None:
+                lsEachDictKey[m] = lsEachDictKey[m].replace('\n', '')
             else:
                 continue
         tupEachDictKey = tuple(lsEachDictKey)
     else:
         for eachCell in recArea[rowNum]:
             lsEachDictValueAll.append(eachCell.value)
-        for m in range(0,len(lsEachDictValueAll)):  # delete '\n' in lsEachDictValueAll.
-            if lsEachDictValueAll[m] != None and type(lsEachDictValueAll[m]) == str: # 'replace()' method only effective towards str type data.
-                lsEachDictValueAll[m] = lsEachDictValueAll[m].replace('\n','')
+        for m in range(0, len(lsEachDictValueAll)):  # delete '\n' in lsEachDictValueAll.
+            if lsEachDictValueAll[m] is not None and type(lsEachDictValueAll[m]) == str:  # 'replace()' method only
+                # effective towards str type data.
+                lsEachDictValueAll[m] = lsEachDictValueAll[m].replace('\n', '')
             else:
                 continue
 
@@ -59,27 +60,26 @@ for rowNum in range(0,len(recArea)):                     # Iterate all row in re
 # pprint.pprint(lsEachDictKey)
 # Regroup lsEachDictValue-------------------------------------
 lsEachDictValueAllRegroup = []
-for c in range(0,len(lsEachDictKey)):
+for c in range(0, len(lsEachDictKey)):
     n = c
     while n < len(lsEachDictValueAll):
         lsEachDictValueAllRegroup.append(lsEachDictValueAll[n])
         n += len(lsEachDictKey)
     c += 1
 # pprint.pprint(lsEachDictValueAllRegroup)
-stepLen = len(recArea)-1
+stepLen = len(recArea) - 1
 # Auto fill up none company name value --------------------------------------
-for m in range(stepLen,2*stepLen):   # This method may not be flawless.
-    if lsEachDictValueAllRegroup[m] == None:
-        lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m-1]
+for m in range(stepLen, 2*stepLen):   # This method may not be flawless.
+    if lsEachDictValueAllRegroup[m] is None:
+        lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m - 1]
 # pprint.pprint(lsEachDictValueAllRegroup)
 
 # Build dictionary data structure-----------------------------------------------------------
 dictData = {}
-for n in range(0,len(lsEachDictKey)):
-    dictData.setdefault(lsEachDictKey[n],lsEachDictValueAllRegroup[n*stepLen:(n+1)*stepLen])
-for eachKey in list(dictData.keys()):   # pop out 'None' key value
+for n in range(0, len(lsEachDictKey)):
+    dictData.setdefault(lsEachDictKey[n], lsEachDictValueAllRegroup[n * stepLen:(n + 1) * stepLen])
+for eachKey in list(dictData.keys()):  # pop out 'None' key value
     # 被遍历的对象，在被遍历时其数据结构不能更改！！！所以用list(dictData.keys())代替dictData()
-    if eachKey == None:
+    if eachKey is None:
         dictData.pop(eachKey)
 pprint.pprint(dictData)
-
