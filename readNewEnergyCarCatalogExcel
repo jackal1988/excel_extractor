@@ -84,7 +84,7 @@ for eachKey in list(dictData.keys()):  # pop out 'None' key value
         dictData.pop(eachKey)
 # -------------------------------write dictData to .py file
 print('写入读取数据...\n')
-resultFile = open('newCatalog4NEC.py'.encode('utf-8'),'w')
+resultFile = open('newCatalog4NEC.py', 'w', encoding='utf-8')
 resultFile.write('allData = ' + pprint.pformat(dictData))
 resultFile.close()
 print('Done.')
