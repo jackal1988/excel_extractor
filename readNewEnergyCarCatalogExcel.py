@@ -39,9 +39,12 @@ for rowNum in range(0, len(recArea)):  # Iterate all row in recArea
             lsEachDictKey.append(eachCell.value)
         for m in range(0, len(lsEachDictKey)):  # standardize Key name, e.g. delete \n, replace () to （）, etc.
             if lsEachDictKey[m] is not None:
+                lsEachDictKey[m] = lsEachDictKey[m].replace(' ', '')
                 lsEachDictKey[m] = lsEachDictKey[m].replace('\n', '')
                 lsEachDictKey[m] = lsEachDictKey[m].replace('(', '（')
                 lsEachDictKey[m] = lsEachDictKey[m].replace(')', '）')
+                lsEachDictKey[m] = lsEachDictKey[m].replace('动力蓄电池总质量', '动力蓄电池组总质量')
+                lsEachDictKey[m] = lsEachDictKey[m].replace('动力蓄电池总能量', '动力蓄电池组总能量')
             else:
                 continue
         # tupEachDictKey = tuple(lsEachDictKey)
