@@ -13,15 +13,12 @@ fname = askopenfilename()
 wb = openpyxl.load_workbook(fname)
 sheetAll = wb.sheetnames
 print('此工作簿包含 ' + str(sheetAll) + ' 工作表\n')
-sheetSelect = input('请输入要选择的表名。\n（注意大小写哦，骚年～～～）\n')
+sheetSelect = input('请输入要选择的表名。\n（请注意大小写）\n')
 
 while sheetSelect not in sheetAll:
     sheetSelect = input('二货！输错啦！\n再输一遍吧。\n\n')
 sheet = wb[sheetSelect]
-# ------------create a new workbook to store the selected data
-# wbTemp = Workbook()
-# sheetTemp = wbTemp.create_sheet('newEnergyCarList', 0)
-# print(type(sheet))
+
 # ------------------------customize the rectangle area you want-----------------------
 
 startCell = input('输入起始单元格名称（字母+数字）\n')
@@ -40,12 +37,14 @@ for rowNum in range(0, len(recArea)):  # Iterate all row in recArea
                 print('属性列不在选择范围内，请重选。\n')
                 sys.exit()
             lsEachDictKey.append(eachCell.value)
-        for m in range(0, len(lsEachDictKey)):  # delete '\n' in lsEachDictKey
+        for m in range(0, len(lsEachDictKey)):  # standardize Key name, e.g. delete \n, replace () to （）, etc.
             if lsEachDictKey[m] is not None:
                 lsEachDictKey[m] = lsEachDictKey[m].replace('\n', '')
+                lsEachDictKey[m] = lsEachDictKey[m].replace('(', '（')
+                lsEachDictKey[m] = lsEachDictKey[m].replace(')', '）')
             else:
                 continue
-        tupEachDictKey = tuple(lsEachDictKey)
+        # tupEachDictKey = tuple(lsEachDictKey)
     else:
         for eachCell in recArea[rowNum]:
             lsEachDictValueAll.append(eachCell.value)
