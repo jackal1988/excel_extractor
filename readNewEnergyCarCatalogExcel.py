@@ -45,6 +45,7 @@ for rowNum in range(0, len(recArea)):  # Iterate all row in recArea
                 lsEachDictKey[m] = lsEachDictKey[m].replace(')', '）')
                 lsEachDictKey[m] = lsEachDictKey[m].replace('动力蓄电池总质量', '动力蓄电池组总质量')
                 lsEachDictKey[m] = lsEachDictKey[m].replace('动力蓄电池总能量', '动力蓄电池组总能量')
+                lsEachDictKey[m] = lsEachDictKey[m].replace('汽车企业名称', '汽车生产企业名称')
             else:
                 continue
         # tupEachDictKey = tuple(lsEachDictKey)
@@ -71,7 +72,7 @@ for c in range(0, len(lsEachDictKey)):
 # pprint.pprint(lsEachDictValueAllRegroup)
 stepLen = len(recArea) - 1
 # Auto fill up none company name value --------------------------------------
-for m in range(stepLen, 2*stepLen):   # This method may not be flawless.
+for m in range(stepLen, 3*stepLen):   # This method may not be flawless.
     if lsEachDictValueAllRegroup[m] is None:
         lsEachDictValueAllRegroup[m] = lsEachDictValueAllRegroup[m - 1]
 # pprint.pprint(lsEachDictValueAllRegroup)
