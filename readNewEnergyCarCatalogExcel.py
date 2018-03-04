@@ -13,8 +13,8 @@ fname = askopenfilename()
 wb = openpyxl.load_workbook(fname)
 sheetAll = wb.sheetnames
 print('此工作簿包含 ' + str(sheetAll) + ' 工作表\n')
-sheetSelect = input('请输入要选择的表名。\n（请注意大小写）\n')
-
+sheetInputNum = input('请输入要选择的工作表序号。\n数字加回车即可\n')
+sheetSelect = 'Table ' + sheetInputNum
 while sheetSelect not in sheetAll:
     sheetSelect = input('二货！输错啦！\n再输一遍吧。\n\n')
 sheet = wb[sheetSelect]
@@ -56,6 +56,7 @@ for rowNum in range(0, len(recArea)):  # Iterate all row in recArea
             if lsEachDictValueAll[m] is not None and type(lsEachDictValueAll[m]) == str:  # 'replace()' method only
                 # effective towards str type data.
                 lsEachDictValueAll[m] = lsEachDictValueAll[m].replace('\n', '')
+                lsEachDictValueAll[m] = lsEachDictValueAll[m].replace(' ', '')
             else:
                 continue
 
