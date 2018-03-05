@@ -15,12 +15,13 @@ fname = askopenfilename()
 wb = openpyxl.load_workbook(fname)
 sheetAll = wb.sheetnames
 
-workBookBatch = int(input('工作簿 ' + str(fname) + ' 包含 ' + str(sheetAll) + ' 工作表\n\n请输入批次号\n'))
+BatchNum = int(input('工作簿 ' + str(fname) + ' 包含 ' + str(sheetAll) + ' 工作表\n\n请输入批次号\n'))
 
 for eachSheetName in sheetAll:
+# eachSheetName = 'Table 10'
     sheet = wb[eachSheetName]
-    print('开始读取' + str(eachSheetName) + '工作表\n')
-# ------------------------customize the rectangle area you want-----------------------
+    print('开始读取工作表 '+ '\"' + str(eachSheetName) + '\"')
+    # ------------------------customize the rectangle area you want-----------------------
 
     startCell = input('请输入起始单元格名称（字母+数字）\n')
     endCell = input('请输入结束单元格名称（字母+数字）\n')
@@ -87,7 +88,13 @@ for eachSheetName in sheetAll:
         # 被遍历的对象，在被遍历时其数据结构不能更改！！！所以用list(dictData.keys())代替dictData()
         if eachKey is None:
             dictData.pop(eachKey)
-
+    for eachKey in list(dictData.keys()):  # ensure 'None' value not exist, in case not iterable.
+        for eachValue in list(dictData[eachKey]):
+            if eachValue == None:
+                i = dictData[eachKey].index(eachValue)
+                dictData[eachKey][i] = 'NoneValue 空值'
+            else:
+                continue
     # pprint.pprint(dictData)
     print('读取数据完毕，开始写入...\n')
     # -------------------------------write dictData to .xlsx file
@@ -98,7 +105,13 @@ for eachSheetName in sheetAll:
     rowNumMax = wsUpdate.max_row  # auto adding towards '序号'
     lsWorkBookBatch = []
     for n in range(0, len(dictData['序号'])):
-        dictData['序号'][n] = dictData['序号'][n] + rowNumMax - 1
+        counter = 0
+        if type(dictData['序号'][n]) != int:
+            dictData['序号'][n] = 'NoneValue 空值'
+            n += 1
+            counter += 1
+        else:
+            dictData['序号'][n] = dictData['序号'][n] + counter + rowNumMax - 1
 
     lsWs1stRowValueAll = []  # iterate all contents in 1st. row of wsUpdate EVERY TIME, in case adding new item in the
     #  future
@@ -116,7 +129,7 @@ for eachSheetName in sheetAll:
     pinPoint3 = tupWs1stRowValueAll.index('技术类型')
     pinPoint4 = tupWs1stRowValueAll.index('车辆用途类别')
     for n in range(0, len(dictData['序号'])):  # auto fill up column: '批次' '技术类型' '车辆用途类别'
-        wsUpdate.cell(row=rowNumMax + n + 1, column=pinPoint2 + 1).value = workBookBatch
+        wsUpdate.cell(row=rowNumMax + n + 1, column=pinPoint2 + 1).value = BatchNum
         if '纯电动续驶里程（km）' in dictData and '燃料消耗量（L/100km）' not in dictData and '燃料电池系统额定功率（kW）' not in dictData:
             wsUpdate.cell(row=rowNumMax + n + 1, column=pinPoint3 + 1).value = '纯电动'
         elif '纯电动续驶里程（km）' in dictData and '燃料消耗量（L/100km）' in dictData and '燃料电池系统额定功率（kW）' not in dictData:
@@ -133,4 +146,4 @@ for eachSheetName in sheetAll:
 
     wbUpdate.save(filename=destFileName)
     print('工作表' + str(eachSheetName) + ' 数据写入完毕。\n')
-print('第 ' + str(workBookBatch) + ' 批新能源车目录已录入完毕。\n')
+print('第 ' + str(BatchNum) + ' 批新能源车目录已录入完毕。\n')
