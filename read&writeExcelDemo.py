@@ -90,7 +90,7 @@ for eachSheetName in sheetAll:
             dictData.pop(eachKey)
     for eachKey in list(dictData.keys()):  # ensure 'None' value not exist, in case not iterable.
         for eachValue in list(dictData[eachKey]):
-            if eachValue == None:
+            if eachValue is None:
                 i = dictData[eachKey].index(eachValue)
                 dictData[eachKey][i] = 'NoneValue 空值'
             else:
@@ -147,3 +147,4 @@ for eachSheetName in sheetAll:
     wbUpdate.save(filename=destFileName)
     print('工作表' + str(eachSheetName) + ' 数据写入完毕。\n')
 print('第 ' + str(BatchNum) + ' 批新能源车目录已录入完毕。\n')
+
