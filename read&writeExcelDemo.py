@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# read and write NewEnergyCarCatalogExcel.py  by SLQ
+'read and write NewEnergyCarCatalogExcel.py '
+
+__author__ = 'RickyS'
 
 import openpyxl, pprint, sys
 from openpyxl.utils import get_column_letter
